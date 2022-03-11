@@ -18,9 +18,7 @@ const Navbar = () => {
     history('/');
     dispatch({ type: actionType.LOGOUT });
     dispatch(verif2(history));
-    setUser(null);
-    window.location.replace('http://localhost:3000/auth');
-    
+    setUser(null);    
     
   }, [dispatch, history]);
 

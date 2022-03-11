@@ -9,13 +9,18 @@ import useStyles from './styles';
 
 const Form  =  ({ currentId, setCurrentId })   =>  {
     const  [postData,  setPostData]   =  useState({
-         title:  '',  message: '',  tag: '' ,  selectedFile: ''
+         title:  '',  message: '',  tags: '' ,  selectedFile: ''
     });
     const posts = useSelector((state)  =>  currentId ? state.posts.find((p) => p._id === currentId) : null);
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = JSON.parse(localStorage.getItem('profile'));
     useEffect(() =>{if (posts)  setPostData(posts);},  [posts])
+        const clear = ()   =>  {
+        setCurrentId(null);
+        setPostData({ title:  '',  message: '',  tags: '' ,  selectedFile: ''});
+    }
+
     const handleSubmit = (e)   =>  {
        e.preventDefault();
         var format = /[ `!@#$%^&*()_+\-=][{}/;':"|.<>?~]/;
@@ -49,22 +54,18 @@ const Form  =  ({ currentId, setCurrentId })   =>  {
                   return;}      
 
 
-        if  ( postData.title.charAt(0) ===' ' ||  postData.title.length < 5  || postData.title.charAt(postData.title.length-1) === ' '  || postData.message.charAt(0) ===' ' ||  postData.message.length < 10  || postData.message.charAt(postData.message.length-1) === ' '  || postData.selectedFile.charAt(0) ===' ' ||  postData.selectedFile.length < 1  || postData.selectedFile.charAt(postData.selectedFile.length-1) === ' ' || postData.tag.join(",").length < 2 ||  postData.tag.join(",").charAt(0) === ' ' || !(postData.tag.join(",").match(/^\S*$/)) ||  postData.tag.join(",").charAt(postData.tag.join(",").length-1) === ' ' || postData.tag.join(",").charAt(postData.tag.join(",").length-1) === ',' || (postData.tag.join(",").match(format)) || postData.title.match(format1) || postData.message.match(format4) ) 
+        if  ( postData.title.charAt(0) ===' ' ||  postData.title.length < 5  || postData.title.charAt(postData.title.length-1) === ' '  || postData.message.charAt(0) ===' ' ||  postData.message.length < 10  || postData.message.charAt(postData.message.length-1) === ' '  || postData.selectedFile.charAt(0) ===' ' ||  postData.selectedFile.length < 1  || postData.selectedFile.charAt(postData.selectedFile.length-1) === ' ' || postData.tags.join(",").length < 2 ||  postData.tags.join(",").charAt(0) === ' ' || !(postData.tags.join(",").match(/^\S*$/)) ||  postData.tags.join(",").charAt(postData.tags.join(",").length-1) === ' ' || postData.tags.join(",").charAt(postData.tags.join(",").length-1) === ',' || (postData.tags.join(",").match(format)) || postData.title.match(format1) || postData.message.match(format4) ) 
         {
           alert("Please verify your entered data, subject items must be according to norms");
           return
         }
-       if(currentId){
-       dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
-       clear();
-       } else  {
+       if(!currentId){
        dispatch(createPost({...postData, name: user?.result?.name}));
        clear();
+       } else  {
+       dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+       clear();
        }
-    }
-    const clear = ()   =>  {
-        setCurrentId(null);
-        setPostData({ title:  '',  message: '',  tag: '' ,  selectedFile: ''});
     }
 
 
@@ -100,12 +101,12 @@ const Form  =  ({ currentId, setCurrentId })   =>  {
                  onChange={(e)  =>   setPostData({  ...postData, message: e.target.value  })}
                  />
             <TextField
-                 name="tag"
+                 name="tags"
                  variant="outlined"
                  label="Tag (coma separated) "
                  fullWidth
-                 value={postData.tag}
-                 onChange={(e)  =>   setPostData({  ...postData, tag: e.target.value.split(',')  })}
+                 value={postData.tags}
+                 onChange={(e)  =>   setPostData({  ...postData, tags: e.target.value.split(',')  })}
                  />
                 <div>
               <FileBase

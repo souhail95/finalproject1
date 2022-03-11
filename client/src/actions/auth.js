@@ -38,7 +38,7 @@ export const verif = (router) => async (dispatch) => {
       
       alert("First name or last name should only contain letters.")
        router('/');
-       window.location.replace('http://localhost:3000/auth');
+      
   } catch (error) {
     
     router('/');
@@ -48,9 +48,9 @@ export const verif = (router) => async (dispatch) => {
 export const verif2 = (router) => async (dispatch) => {
   try {
       
-      
-       router('/');
        window.location.replace('http://localhost:3000/auth');
+       router('/auth');
+       
   } catch (error) {
     
     router('/');

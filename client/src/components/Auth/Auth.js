@@ -9,7 +9,8 @@ import { signin, signup, verif } from '../../actions/auth';
 import { AUTH } from '../../constants/actionTypes';
 import useStyles from './styles';
 import Input from './Input';
- 
+import Navbar from '../Navbar/Navbar';
+
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 const SignUp = () => {
@@ -63,6 +64,8 @@ const SignUp = () => {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   return (
+    <div>
+    <Navbar />
     <Container component="main" style={{marginBottom:"50%"}} maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
         <Avatar className={classes.avatar}>
@@ -105,6 +108,8 @@ const SignUp = () => {
         </form>
       </Paper>
     </Container>
+     <footer style={{color:'white',textDecoration:'none',width:'100%',paddingTop:'0.5%',marginTop:"20%"}} className="box10" ><h2 style={{textAlign:"center",paddingTop:"1%"}} >Our website is open 24hours/24 during the week except for the week-end!</h2></footer>
+    </div>
   );
 };
 

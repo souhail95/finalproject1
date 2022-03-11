@@ -13,7 +13,6 @@ const   Post  = ({  post,   setCurrentId  })  => {
     const dispatch = useDispatch();
     const classes = useStyles();
       const user = JSON.parse(localStorage.getItem('profile'));
-
   const Likes = () => {
     if (post.likes.length > 0) {
       return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
@@ -26,6 +25,7 @@ const   Post  = ({  post,   setCurrentId  })  => {
 
     return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like&nbsp;</>;
   };
+
     return(
         <Card className={classes.card} >
           <title>{post.title}</title>
@@ -42,7 +42,7 @@ const   Post  = ({  post,   setCurrentId  })  => {
       </div>
       )}
           <div  className={classes.details}  >
-             <Typography   variant="body2"   color="textSecondary"  >{post.tag.map((tags)  => `#${tags} `)}</Typography>
+             <Typography   variant="body2"   color="textSecondary"  >{post.tags.map((tags)  => `#${tags} `)}</Typography>
 
           </div>
           <Typography   variant="h5" className={classes.title}  gutterBottom>{post.title}</Typography>
@@ -51,11 +51,11 @@ const   Post  = ({  post,   setCurrentId  })  => {
           </CardContent>
           <CardActions className={classes.cardActions}>
              <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
-               <Likes />
+                  <Likes />
              </Button>
              {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
                 <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
-                   <DeleteIcon fontSize="small" /> &nbsp; Delete &nbsp;
+                   <DeleteIcon  fontSize="small"  /> &nbsp; DELETE&nbsp;
                 </Button>
               )}
           </CardActions>
